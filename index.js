@@ -46,32 +46,38 @@ let persons = [
     response.status(204).end()
   })
 
-  const generateId = () => {
-    const maxId = notes.length > 0
-      ? Math.max(...notes.map(n => n.id))
-      : 0
-    return maxId + 1
-  }
   
   app.post('/api/persons', (request, response) => {
     const body = request.body
   
-    if (!body.content) {
+    if (!body.name) {
       return response.status(400).json({ 
-        error: 'content missing' 
+        error: 'name missing' 
+      })
+    }
+
+    if (!body.phone) {
+      return response.status(400).json({ 
+        error: 'phone missing' 
+      })
+    }
+
+    if (persons.find(person => person.name === body.name)) {
+      return response.status(400).json({ 
+        error: 'name must be unique' 
       })
     }
   
     const person = {
-      content: body.content,
-      important: body.important || false,
+      name: body.name,
+      phone: body.number,
       date: new Date(),
-      id: generateId(),
+      id: Math.random(),
     }
   
-    notes = notes.concat(note)
+    persons = persons.concat(person)
   
-    response.json(note)
+    response.json(person)
   })
   
   const PORT = 3001
