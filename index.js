@@ -75,7 +75,7 @@ let persons = [
       })
     }
 
-    if (!body.phone) {
+    if (!body.number) {
       return response.status(400).json({ 
         error: 'phone missing' 
       })
