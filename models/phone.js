@@ -14,8 +14,8 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFind
   })
 
 const phoneSchema = new mongoose.Schema({
-  name: { type: String, unique: true },
-  phone: String,
+  name: { type: String, unique: true, minLength: 5 },
+  phone: { type: String, minLength: 8 }
 })
 
 phoneSchema.plugin(uniqueValidator);
